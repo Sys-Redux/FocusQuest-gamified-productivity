@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useTasks } from '../hooks/useTasks';
+import { TaskForm } from '../components/TaskForm';
 
 export default function Dashboard() {
     const { tasks, toggleTaskComplete } = useTasks();
+    const [isFormOpen, setIsFormOpen] = useState(false);
 
     const completedTasks = tasks.filter(t => t.completed).length
     const pendingTasks = tasks.length - completedTasks;
@@ -21,10 +24,10 @@ export default function Dashboard() {
 
 
     return (
-        <main className='min-h-screen bg-ctp-base text-ctp-text'>
+        <main className='min-h-screen gradient-bg-vibrant text-ctp-text'>
             <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-8'>
                 <header className='mb-6 lg:mb-8'>
-                    <h1 className='text-3xl sm:text-4xl font-bold text-ctp-mauve mb-2'>
+                    <h1 className='text-3xl sm:text-4xl font-bold text-ctp-mauve mb-2 drop-shadow-lg'>
                         FocusQuest Dash
                     </h1>
                     <p className='text-sm sm:text-base text-ctp-subtext0'>
@@ -34,7 +37,7 @@ export default function Dashboard() {
 
                 {/* Stats Cards */}
                 <section className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8' aria-label='Task Statistics'>
-                    <article className='bg-ctp-surface0 p-4 sm:p-6 rounded-xl border border-ctp-surface1 hover:border-ctp-blue/50 transition-colors'>
+                    <article className='glass p-4 sm:p-6 rounded-xl hover:border-ctp-blue/50 transition-all shadow-lg'>
                         <h2 className='text-ctp-subtext0 text-xs sm:text-sm font-medium mb-2'>
                             Total Quests
                         </h2>
@@ -42,7 +45,7 @@ export default function Dashboard() {
                             {tasks.length}
                         </p>
                     </article>
-                    <article className='bg-ctp-surface0 p-4 sm:p-6 rounded-xl border border-ctp-surface1 hover:border-ctp-blue/50 transition-colors'>
+                    <article className='glass p-4 sm:p-6 rounded-xl hover:border-ctp-blue/50 transition-all shadow-lg'>
                         <h2 className='text-ctp-subtext0 text-xs sm:text-sm font-medium mb-2'>
                             Completed Quests
                         </h2>
@@ -50,7 +53,7 @@ export default function Dashboard() {
                             {completedTasks}
                         </p>
                     </article>
-                    <article className='bg-ctp-surface0 p-4 sm:p-6 rounded-xl border border-ctp-surface1 hover:border-ctp-blue/50 transition-colors'>
+                    <article className='glass p-4 sm:p-6 rounded-xl hover:border-ctp-blue/50 transition-all shadow-lg'>
                         <h2 className='text-ctp-subtext0 text-xs sm:text-sm font-medium mb-2'>
                             Pending Quests
                         </h2>
@@ -61,12 +64,16 @@ export default function Dashboard() {
                 </section>
 
                 {/* Task List */}
-                <section className='bg-ctp-surface0 rounded-xl border border-ctp-surface1 p-4 sm:p-6' aria-label='Task List'>
+                <section className='glass-strong rounded-xl p-4 sm:p-6 shadow-2xl' aria-label='Task List'>
                     <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6'>
                         <h2 className='text-xl sm:text-2xl font-bold text-ctp-text'>
                             Your Quests
                         </h2>
-                        <button className='bg-ctp-mauve hover:bg-ctp-mauve/80 text-ctp-base px-4 py-2 rounded-lg font-medium transition-colors w-full sm:w-auto'>
+                        <button
+                            onClick={() => setIsFormOpen(true)}
+                            className='bg-ctp-mauve hover:bg-ctp-mauve/80 text-ctp-base px-4 py-2 rounded-lg
+                                font-medium transition-colors w-full sm:w-auto shadow-lg'
+                        >
                             + Add Quest
                         </button>
                     </div>
@@ -82,8 +89,9 @@ export default function Dashboard() {
                             {tasks.map(task => (
                                 <li
                                     key={task.id}
-                                    className={`bg-ctp-mantl border rounded-xl p-4 sm:p-5 transition-all hover:border-ctp-mauve/50 ${
-                                        task.completed ? 'border-ctp-surface2 opacity-75' : 'border-ctp-surface1'
+                                    className={`bg-ctp-mantle/60 backdrop-blur-md border rounded-xl p-4 sm:p-5
+                                        transition-all hover:border-ctp-mauve/50 hover:shadow-lg ${
+                                            task.completed ? 'border-ctp-surface2 opacity-75' : 'border-ctp-surface1/50'
                                     }`}
                                 >
                                     <article className='flex items-start gap-3 sm:gap-4'>
@@ -124,6 +132,9 @@ export default function Dashboard() {
                     )}
                 </section>
             </div>
+
+            {/* Task Form Modal */}
+            <TaskForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
         </main>
     );
 }

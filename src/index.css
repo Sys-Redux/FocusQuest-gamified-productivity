@@ -37,3 +37,59 @@
     --breakpoint-xl: 1280px;
     --breakpoint-2xl: 1536px;
 }
+
+/* Animated Gradient Background */
+@keyframes gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Frosted Glassmorphism Utilities */
+@layer components {
+    .glass {
+        @apply bg-ctp-surface0/80 backdrop-blur-xl border border-ctp-surface1/50;
+    }
+
+    .glass-strong {
+        @apply bg-ctp-surface0/90 backdrop-blur-2xl border border-ctp-surface1/60;
+    }
+
+    .gradient-bg {
+        background: linear-gradient(
+            135deg,
+            var(--color-ctp-base) 0%,
+            var(--color-ctp-mantle) 25%,
+            var(--color-ctp-surface0) 50%,
+            var(--color-ctp-mantle) 75%,
+            var(--color-ctp-base) 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient-rotate 300s ease infinite;
+    }
+
+    .gradient-bg-vibrant {
+        background: linear-gradient(
+            135deg,
+            var(--color-ctp-base) 0%,
+            var(--color-ctp-mauve) 10%,
+            var(--color-ctp-blue) 20%,
+            var(--color-ctp-base) 30%,
+            var(--color-ctp-pink) 40%,
+            var(--color-ctp-base) 50%,
+            var(--color-ctp-teal) 60%,
+            var(--color-ctp-base) 70%,
+            var(--color-ctp-peach) 80%,
+            var(--color-ctp-base) 90%,
+            var(--color-ctp-lavender) 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient-rotate 300s ease infinite;
+    }
+}

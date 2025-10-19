@@ -1,48 +1,119 @@
-# FocusQuest - Task Management App
+# FocusQuest - Gamified Productivity Tasking
 
-A TypeScript + React task manager built with Vite, Tailwind CSS, and Context API.
+A modern, dark-themed task management app built with React, TypeScript, and Tailwind CSS v4. Features a beautiful glassmorphism UI with animated gradient backgrounds.
 
-## Tech Stack
+## 🎨 Design Highlights
 
-- React 19 + TypeScript 5.9
-- Vite (Rolldown) + Tailwind CSS 4.1
-- React Router DOM + Auth0 (ready to implement)
+### Tailwind CSS v4 Features
 
-## Status
+This project showcases modern Tailwind CSS v4 capabilities:
 
-**✅ Done:** Project setup, TypeScript types (`Task`, `User`), Context API (`TaskContext`, `TaskProvider`)
-**🚧 Next:** `useTasks` hook, Dashboard UI, forms, Auth0, routing
+**`@theme` Directive**
+Instead of the old `tailwind.config.js`, I'm using the new `@theme` directive directly in CSS to define custom colors and breakpoints. This keeps everything in one place and feels more natural.
 
-## What We Built
+**`@layer components`**
+Created reusable component classes like `.glass` and `.glass-strong` for consistent glassmorphism effects throughout the app. Much cleaner than repeating backdrop-blur and opacity values everywhere.
 
-### Context API State Management
-- **TaskContext.tsx** - Defines context interface with TypeScript
-- **TaskProvider.tsx** - Manages task state with CRUD operations:
-  - `addTask`, `updateTask`, `deleteTask`, `toggleTaskComplete`
-  - Follows React Fast Refresh best practices (component-only exports)
+**Custom Animations**
+Built a smooth, slow-rotating gradient background with custom `@keyframes`. The gradient uses darker, muted Catppuccin colors to create an ambient effect that doesn't compete with the UI.
 
-### TypeScript Types
-- **Task** - `id`, `title`, `description`, `completed`, `priority`, `createdAt`, `updatedAt`, `dueDate?`
-- **TaskFormData** - Omits auto-generated fields for forms
-- **User** - Basic user interface for Auth0 integration
+### Glassmorphism & Visual Effects
 
-## Quick Start
+- **Frosted glass cards** with `backdrop-blur` for that modern, depth-filled aesthetic
+- **Animated gradient background** that subtly shifts colors over 300 seconds
+- **Catppuccin Mocha theme** - a carefully chosen dark color palette that's easy on the eyes
+- **Responsive design** using mobile-first approach with fluid spacing
+
+## ⚛️ React Architecture
+
+### Context API for State Management
+
+Went with a clean separation of concerns:
+
+- **`TaskContext.tsx`** - Defines the context type and creates the context
+- **`TaskProvider.tsx`** - Handles all state logic and provides it to the app
+- **`useTasks.ts`** - Custom hook for consuming the context
+
+This structure prevents Fast Refresh issues (files that export components can't export non-component values) and keeps things organized.
+
+### TypeScript Best Practices
+
+- Using `interface` for data shapes (Task, User types)
+- Proper typing for React hooks (`useState<Task[]>`, `FormEvent`, etc.)
+- No `React.FC` - using regular functions with explicit prop types (modern React standard)
+- Named imports (`ReactNode` instead of `React.ReactNode`) for better tree-shaking
+
+### Component Patterns
+
+**Dashboard** - Main view showing task stats and list with conditional rendering
+**TaskForm** - Modal form with controlled inputs, form validation, and mobile-optimized UX
+**Semantic HTML** - Using `<main>`, `<article>`, `<section>`, `<time>` for better SEO and accessibility
+
+## 🚀 Key Features
+
+- ✅ Create, complete, and manage tasks
+- 📊 Real-time task statistics (total, pending, completed)
+- 🎯 Priority levels (low, medium, high)
+- 📅 Optional due dates
+- 📱 Fully responsive (mobile-first design)
+- ♿ Accessible (ARIA labels, semantic HTML)
+- 🎨 Beautiful glassmorphism UI
+
+## 🛠️ Tech Stack
+
+- **React 19** with TypeScript
+- **Vite** for blazing-fast dev experience
+- **Tailwind CSS v4** with custom theme
+- **React Router** for routing (ready for future pages)
+- **Context API** for state management
+
+## 📦 Installation
 
 ```bash
-npm install          # Install dependencies
-npm run dev          # Start dev server (localhost:5173)
-npm run build        # Build for production
-npm run lint         # Run ESLint
+npm install
+npm run dev
 ```
 
-## Structure
+## 🎯 Project Structure
 
 ```
 src/
-├── context/         # TaskContext, TaskProvider ✅
-├── types/           # Task, User interfaces ✅
-├── hooks/           # Custom hooks (empty)
-├── pages/           # Page components (empty)
-├── components/      # Reusable components (empty)
-└── utils/           # Helper functions (empty)
+├── components/
+│   └── TaskForm.tsx          # Task creation modal
+├── context/
+│   ├── TaskContext.tsx       # Context definition
+│   └── TaskProvider.tsx      # State provider
+├── hooks/
+│   └── useTasks.ts           # Custom hook
+├── pages/
+│   └── Dashboard.tsx         # Main dashboard
+├── types/
+│   ├── task.ts               # Task interface
+│   └── user.ts               # User interface
+├── index.css                 # Tailwind + custom styles
+└── App.tsx                   # App entry point
 ```
+
+## 💡 Design Decisions
+
+**Why no gamification yet?**
+Starting simple to nail the core functionality first. Adding XP, levels, and achievements later once the foundation is solid.
+
+**Why Context API over Redux?**
+For this project size, Context API is perfect. It's built into React, has zero dependencies, and does exactly what we need without the boilerplate.
+
+**Why Tailwind v4?**
+Wanted to try the new `@theme` and `@layer` features. The ability to define everything in CSS feels cleaner than config files, and the new Vite plugin makes it seamless.
+
+## 🔮 Next Steps
+
+- [ ] Add task editing and deletion
+- [ ] Implement Auth0 authentication
+- [ ] Add gamification (XP, levels, achievements)
+- [ ] Persistent storage (localStorage or backend)
+- [ ] Task categories/tags
+- [ ] Dark/light theme toggle
+
+---
+
+Built as part of Coding Temple's TypeScript curriculum.
