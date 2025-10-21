@@ -76,7 +76,7 @@ npm run dev
 
 ## 🎯 Project Structure
 
-```
+```md
 src/
 ├── components/
 │   └── TaskForm.tsx          # Task creation modal
