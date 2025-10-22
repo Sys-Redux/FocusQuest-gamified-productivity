@@ -1,17 +1,33 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
+import { useAuth0 } from "@auth0/auth0-react"
 import { TaskProvider } from "./context/TaskProvider"
-import Dashboard from "./pages/Dashboard"
+import { Dashboard } from "./pages/Dashboard"
+import { Login } from "./pages/Login"
+import { Auth0Guard } from "./components/Auth0Guard"
+import { Callback } from "./pages/Callback"
 
-function App() {
-  return (
-    <BrowserRouter>
-      <TaskProvider>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
-      </TaskProvider>
-    </BrowserRouter>
-  );
+export const App: React.FC = () => {
+    const { isLoading } = useAuth0();
+
+    if (isLoading) {
+        return (
+            <div className='min-h-screen flex items-center justify-center gradient-bg-vibrant'>
+                <div className='glass-strong p-8 rounded-xl'>
+                    <p className='text-ctp-text'>Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <TaskProvider>
+            <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path='/dashboard' element={<Auth0Guard component={Dashboard} />} />
+                <Route path="/callback" element={<Callback />} />
+            </Routes>
+        </TaskProvider>
+    );
 }
 
 export default App;

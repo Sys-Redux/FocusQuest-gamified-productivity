@@ -61,6 +61,27 @@
         @apply bg-ctp-surface0/90 backdrop-blur-2xl border border-ctp-surface1/60;
     }
 
+    .glass-nav {
+        @apply backdrop-blur-3xl border border-ctp-surface1/40;
+        transition: all 0.3 ease;
+    }
+
+    .glass-nav-scrolled {
+        @apply backdrop-blur-2xl border border-ctp-surface1/70 shadow-2xl;
+    }
+
+    .logo-gradient {
+        background: linear-gradient(
+            var(--color-ctp-mauve) 0%,
+            var(--color-ctp-pink) 50%,
+            var(--color-ctp-lavender) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(203, 166, 247, 0.4);
+    }
+
     .gradient-bg {
         background: linear-gradient(
             135deg,

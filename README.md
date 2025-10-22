@@ -1,119 +1,180 @@
-# FocusQuest - Gamified Productivity Tasking
+# FocusQuest
 
-A modern, dark-themed task management app built with React, TypeScript, and Tailwind CSS v4. Features a beautiful glassmorphism UI with animated gradient backgrounds.
+A sleek, minimal task management app built with React + TypeScript. Gamified productivity with a gorgeous dark UI.
 
-## 🎨 Design Highlights
+## What I Built
 
-### Tailwind CSS v4 Features
+This is a modern task manager with Auth0 authentication, built on React 19 and Vite. The whole aesthetic is based on the **Catppuccin Mocha** color palette with frosted glass effects and subtle animated gradients. It's all dark mode (the only mode that matters).
 
-This project showcases modern Tailwind CSS v4 capabilities:
+### The Tech Stack
 
-**`@theme` Directive**
-Instead of the old `tailwind.config.js`, I'm using the new `@theme` directive directly in CSS to define custom colors and breakpoints. This keeps everything in one place and feels more natural.
+- **React 19.1.1** - Latest React with all the new goodies
+- **TypeScript 5.9** - Because I like my code to make sense
+- **Vite** - Well, actually `rolldown-vite@7.1.14`, a faster Vite variant
+- **Tailwind CSS v4** - Using the new `@theme` directive (no more config files!)
+- **Auth0** - Handling all the auth stuff so I don't have to
+- **React Router DOM v7** - Client-side routing with protected routes
+- **Context API** - Simple state management, no bloat
 
-**`@layer components`**
-Created reusable component classes like `.glass` and `.glass-strong` for consistent glassmorphism effects throughout the app. Much cleaner than repeating backdrop-blur and opacity values everywhere.
+### Design Philosophy
 
-**Custom Animations**
-Built a smooth, slow-rotating gradient background with custom `@keyframes`. The gradient uses darker, muted Catppuccin colors to create an ambient effect that doesn't compete with the UI.
+I wanted something that felt **premium** but wasn't over the top. So I went with:
 
-### Glassmorphism & Visual Effects
+- **Catppuccin Mocha** - The entire dark theme palette as CSS custom properties
+- **Glassmorphism** - Frosted glass effects using `backdrop-blur` with semi-transparent backgrounds
+- **Animated Gradients** - Subtle rotating gradients on the background (300s duration so it's barely noticeable but adds depth)
+- **Mobile-First** - Everything is responsive, using breakpoints to indicate screen-size
+- **Minimal UI** - No clutter, just what you need to see your tasks
 
-- **Frosted glass cards** with `backdrop-blur` for that modern, depth-filled aesthetic
-- **Animated gradient background** that subtly shifts colors over 300 seconds
-- **Catppuccin Mocha theme** - a carefully chosen dark color palette that's easy on the eyes
-- **Responsive design** using mobile-first approach with fluid spacing
-
-## ⚛️ React Architecture
-
-### Context API for State Management
-
-Went with a clean separation of concerns:
-
-- **`TaskContext.tsx`** - Defines the context type and creates the context
-- **`TaskProvider.tsx`** - Handles all state logic and provides it to the app
-- **`useTasks.ts`** - Custom hook for consuming the context
-
-This structure prevents Fast Refresh issues (files that export components can't export non-component values) and keeps things organized.
-
-### TypeScript Best Practices
-
-- Using `interface` for data shapes (Task, User types)
-- Proper typing for React hooks (`useState<Task[]>`, `FormEvent`, etc.)
-- No `React.FC` - using regular functions with explicit prop types (modern React standard)
-- Named imports (`ReactNode` instead of `React.ReactNode`) for better tree-shaking
-
-### Component Patterns
-
-**Dashboard** - Main view showing task stats and list with conditional rendering
-**TaskForm** - Modal form with controlled inputs, form validation, and mobile-optimized UX
-**Semantic HTML** - Using `<main>`, `<article>`, `<section>`, `<time>` for better SEO and accessibility
-
-## 🚀 Key Features
-
-- ✅ Create, complete, and manage tasks
-- 📊 Real-time task statistics (total, pending, completed)
-- 🎯 Priority levels (low, medium, high)
-- 📅 Optional due dates
-- 📱 Fully responsive (mobile-first design)
-- ♿ Accessible (ARIA labels, semantic HTML)
-- 🎨 Beautiful glassmorphism UI
-
-## 🛠️ Tech Stack
-
-- **React 19** with TypeScript
-- **Vite** for blazing-fast dev experience
-- **Tailwind CSS v4** with custom theme
-- **React Router** for routing (ready for future pages)
-- **Context API** for state management
-
-## 📦 Installation
-
-```bash
-npm install
-npm run dev
-```
-
-## 🎯 Project Structure
+## Project Structure
 
 ```md
 src/
-├── components/
-│   └── TaskForm.tsx          # Task creation modal
-├── context/
-│   ├── TaskContext.tsx       # Context definition
-│   └── TaskProvider.tsx      # State provider
-├── hooks/
-│   └── useTasks.ts           # Custom hook
-├── pages/
-│   └── Dashboard.tsx         # Main dashboard
-├── types/
-│   ├── task.ts               # Task interface
-│   └── user.ts               # User interface
-├── index.css                 # Tailwind + custom styles
-└── App.tsx                   # App entry point
+├── components/          # Reusable UI components
+│   ├── Auth0Guard.tsx      # Protected route wrapper
+│   ├── LoginButton.tsx     # Auth0 login trigger
+│   ├── LogoutButton.tsx    # Auth0 logout trigger
+│   ├── NavBar.tsx          # Fixed frosted glass navbar
+│   └── TaskForm.tsx        # Modal form for adding tasks
+├── context/            # State management
+│   ├── Auth0ProviderWithNavigate.tsx  # Auth0 + Router integration
+│   ├── TaskContext.tsx                # Context definition
+│   └── TaskProvider.tsx               # Context provider with CRUD
+├── hooks/              # Custom hooks
+│   └── useTasks.ts        # Hook to consume TaskContext
+├── pages/              # Route components
+│   ├── Callback.tsx       # Auth0 callback handler
+│   ├── Dashboard.tsx      # Main app view
+│   ├── Login.tsx          # Landing/login page
+│   └── ProfileModal.tsx   # User profile modal
+├── types/              # TypeScript definitions
+│   ├── task.ts           # Task interface
+│   └── user.ts           # User interface
+├── App.tsx             # Route configuration
+├── main.tsx            # App entry point
+└── index.css           # Tailwind + custom styles
 ```
 
-## 💡 Design Decisions
+## Key Features
 
-**Why no gamification yet?**
-Starting simple to nail the core functionality first. Adding XP, levels, and achievements later once the foundation is solid.
+### Authentication
 
-**Why Context API over Redux?**
-For this project size, Context API is perfect. It's built into React, has zero dependencies, and does exactly what we need without the boilerplate.
+- Auth0 Universal Login integration
+- Protected routes using HOC pattern
+- Profile modal showing user info
+- Persistent sessions with refresh tokens
 
-**Why Tailwind v4?**
-Wanted to try the new `@theme` and `@layer` features. The ability to define everything in CSS feels cleaner than config files, and the new Vite plugin makes it seamless.
+### Task Management
 
-## 🔮 Next Steps
+- Create tasks with title, description, priority
+- Optional due dates
+- Mark tasks complete/incomplete
+- Real-time stats (total, completed, pending)
+- Priority badges (low/medium/high)
 
-- [ ] Add task editing and deletion
-- [ ] Implement Auth0 authentication
-- [ ] Add gamification (XP, levels, achievements)
-- [ ] Persistent storage (localStorage or backend)
+### UI/UX
+
+- Glassmorphism effects on all cards
+- Animated gradient backgrounds
+- Responsive design (mobile → desktop)
+- Fixed navbar that doesn't get in the way
+- Modal-based forms and profile view
+
+## Setup
+
+### Prerequisites
+
+- Node.js (latest LTS recommended)
+- Auth0 account
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Auth0 Configuration
+
+1. Create an Auth0 Application (Single Page Application)
+2. Set **Allowed Callback URLs**: `http://localhost:5173/callback, http://localhost:5173/dashboard`
+3. Set **Allowed Logout URLs**: `http://localhost:5173`
+4. Set **Allowed Web Origins**: `http://localhost:5173`
+5. Add `openid profile email` to requested scopes
+6. (Optional) Configure social connections like Google in the Auth0 dashboard
+
+## Code Architecture
+
+### Context Pattern
+
+I separated the context into three files to keep React Fast Refresh happy:
+
+- `TaskContext.tsx` - Context definition only
+- `TaskProvider.tsx` - Provider component with state logic
+- `useTasks.ts` - Custom hook for consuming context
+
+### Routing Structure
+
+```tsx
+/ → Login page (redirects to /dashboard if authenticated)
+/dashboard → Protected dashboard (requires auth)
+/callback → Auth0 callback handler
+```
+
+### Styling Approach
+
+Using Tailwind v4's `@theme` directive in `index.css`:
+
+- All Catppuccin colors as CSS custom properties
+- Custom utility classes: `.glass`, `.glass-strong`, `.gradient-bg`, `.gradient-bg-vibrant`
+- Mobile-first responsive design with custom breakpoints
+
+### State Management
+
+Tasks are currently stored in-memory using React Context. The provider offers:
+
+- `addTask(task: Task)`
+- `updateTask(id: string, task: Partial<Task>)`
+- `deleteTask(id: string)`
+- `toggleTaskComplete(id: string)`
+
+## What's Next
+
+This is v1 — the simple version. Future enhancements I'm thinking about:
+
+- [ ] Backend API integration (probably Supabase or Firebase)
+- [ ] Task editing UI
+- [ ] Task deletion with confirmation
+- [ ] User-specific task filtering
 - [ ] Task categories/tags
-- [ ] Dark/light theme toggle
+- [ ] Dark/light theme toggle (jk, dark mode forever)
+- [ ] Due date reminders
+- [ ] Task search and filtering
+- [ ] Maybe bring back the gamification stuff from the original roadmap?
+
+## Lessons Learned
+
+- **Tailwind v4** changed everything — the `@theme` directive is way cleaner than config files
+- **Fast Refresh** breaks if you mix component and non-component exports in the same file
+- **Auth0 scopes** need to be explicitly requested (`openid profile email`)
+- **Fixed navbars** need padding compensation on page content (`pt-20` for a `h-16` navbar)
+- **clamp()** for fluid typography > breakpoint-based font sizes
+
+## Notes
+
+- Profile pictures from Auth0 might not show up if your Auth0 social connection doesn't include the picture scope — that's a provider config thing
+- Tasks reset on page refresh since there's no backend yet
+- The animated gradient is set to 300 seconds so it's super subtle
 
 ---
 
-Built as part of Coding Temple's TypeScript curriculum.
+Built with ☕ and way too much time tweaking glassmorphism effects
