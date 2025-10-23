@@ -13,6 +13,7 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
     const [dueDate, setDueDate] = useState<string>('');
+    const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -24,6 +25,7 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
             description,
             completed: false,
             priority,
+            difficulty,
             createdAt: new Date(),
             updatedAt: new Date(),
             // If dueDate is not an empty string, convert it to a Date object and include it in the newTask
@@ -36,6 +38,7 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
         setTitle('');
         setDescription('');
         setPriority('medium');
+        setDifficulty('medium');
         setDueDate('');
         onClose();
     };
@@ -123,6 +126,26 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
                             <option value='low'>Low</option>
                             <option value='medium'>Medium</option>
                             <option value='high'>High</option>
+                        </select>
+                    </div>
+
+                    {/* Difficulty */}
+                    <div>
+                        <label htmlFor='difficulty' className='block text-sm font-medium text-ctp-text mb-2'>
+                            Difficulty Level *
+                        </label>
+                        <select
+                            id='difficulty'
+                            value={difficulty}
+                            onChange={(e) => setDifficulty(e.target.value as 'easy' | 'medium' | 'hard')}
+                            required
+                            className='w-full px-3 py-2 sm:px-4 sm:py-2.5 bg-ctp-mantle/60 backdrop-blur-md border border-ctp-surface2/50
+                                rounded-lg text-ctp-text text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-ctp-mauve
+                                focus:border-transparent transition-all'
+                        >
+                            <option value='easy'>Easy</option>
+                            <option value='medium'>Medium</option>
+                            <option value='hard'>Hard</option>
                         </select>
                     </div>
 

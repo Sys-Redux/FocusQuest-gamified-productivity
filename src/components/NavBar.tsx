@@ -49,8 +49,9 @@ export const NavBar: React.FC = () => {
                                     {/* Home Button */}
                                     <button
                                         onClick={() => navigate('/')}
-                                        className='text-ctp-text hover:text-ctp-mauve transition-colors
-                                            font-medium text-sm sm:text-base'
+                                        className='bg-ctp-surface0/60 backdrop-blur-md
+                                            border border-ctp-surface1/50 px-6 py-3 rounded-lg hover:border-ctp-mauve/50
+                                            transition-all shadow-md text-ctp-text'
                                         aria-label='Go to Home'
                                     >
                                         Home
@@ -59,7 +60,7 @@ export const NavBar: React.FC = () => {
                                     <button
                                         onClick={() => setIsProfileOpen(true)}
                                         className='flex items-center gap-2 bg-ctp-surface0/60 backdrop-blur-md
-                                            border border-ctp-surface1/50 px-3 py-2 rounded-lg hover:border-ctp-mauve/50
+                                            border border-ctp-surface1/50 px-3 py-2.5 rounded-lg hover:border-ctp-mauve/50
                                             transition-all shadow-md'
                                         aria-label='View Profile'
                                     >

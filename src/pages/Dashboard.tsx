@@ -3,11 +3,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useTasks } from '../hooks/useTasks';
 import { TaskForm } from '../components/TaskForm';
 import { NavBar } from '../components/NavBar';
+import { TaskModal } from './TaskModal';
+import type { Task } from '../types/task';
+import { XPBar } from '../components/XPBar';
 
 export const Dashboard: React.FC = () => {
     const { user, isLoading } = useAuth0();
     const { tasks, toggleTaskComplete } = useTasks();
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
     const completedTasks = tasks.filter(t => t.completed).length
     const pendingTasks = tasks.length - completedTasks;
@@ -51,6 +55,9 @@ export const Dashboard: React.FC = () => {
                             </p>
                         </div>
                     </header>
+                    <section className='mb-6 lg:mb-8'>
+                        <XPBar />
+                    </section>
 
                     {/* Stats Cards */}
                     <section className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8' aria-label='Task Statistics'>
@@ -106,8 +113,9 @@ export const Dashboard: React.FC = () => {
                                 {tasks.map(task => (
                                     <li
                                         key={task.id}
+                                        onClick={() => setSelectedTask(task)}
                                         className={`bg-ctp-mantle/60 backdrop-blur-md border rounded-xl p-4 sm:p-5
-                                            transition-all hover:border-ctp-mauve/50 hover:shadow-lg ${
+                                            transition-all hover:border-ctp-mauve/50 hover:shadow-lg cursor-pointer ${
                                                 task.completed ? 'border-ctp-surface2 opacity-75' : 'border-ctp-surface1/50'
                                         }`}
                                     >
@@ -116,6 +124,7 @@ export const Dashboard: React.FC = () => {
                                                 type='checkbox'
                                                 checked={task.completed}
                                                 onChange={() => toggleTaskComplete(task.id)}
+                                                onClick={(e) => e.stopPropagation()}
                                                 className='mt-1 h-4 w-4 sm:h-5 sm:w-5 rounded border-ctp-surface2 bg-ctp-surface0 text-ctp-mauve cursor-pointer'
                                             />
                                             <div className='flex-1 min-w-0'>
@@ -152,6 +161,11 @@ export const Dashboard: React.FC = () => {
 
                 {/* Task Form Modal */}
                 <TaskForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
+                <TaskModal
+                    task={selectedTask}
+                    isOpen={selectedTask !== null}
+                    onClose={() => setSelectedTask(null)}
+                />
             </main>
         </>
     );

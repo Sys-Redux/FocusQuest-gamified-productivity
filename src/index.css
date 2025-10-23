@@ -51,6 +51,15 @@
     }
 }
 
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 /* Frosted Glassmorphism Utilities */
 @layer components {
     .glass {
@@ -112,6 +121,10 @@
         );
         background-size: 400% 400%;
         animation: gradient-rotate 300s ease infinite;
+    }
+
+    .animate-shimmer {
+        animation: shimmer 2s infinite;
     }
 }
 

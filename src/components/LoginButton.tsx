@@ -14,8 +14,8 @@ export const LoginButton: React.FC = () => {
         <button
             onClick={() => handleLogin()}
             disabled={isLoading}
-            className='bg-ctp-mauve hover:bg-ctp-mauve/80 text-ctp-base px-6 py-3 rounded-lg font-medium
-                transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed'
+            className='bg-ctp-mauve/60 backdrop-blur-md border border-ctp-lavender px-6 py-3 rounded-lg
+                hover:border-ctp-mauve/50 transition-all shadow-md text-ctp-text'
             >
                 {isLoading ? 'Loading...' : 'Log In'}
             </button>

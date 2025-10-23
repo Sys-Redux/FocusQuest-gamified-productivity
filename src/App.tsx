@@ -6,6 +6,7 @@ import { Login } from "./pages/Login"
 import { Auth0Guard } from "./components/Auth0Guard"
 import { Callback } from "./pages/Callback"
 import { HomePage } from "./pages/HomePage"
+import { UserProgressProvider } from "./context/UserProgressProvider"
 
 export const App: React.FC = () => {
     const { isLoading } = useAuth0();
@@ -21,14 +22,16 @@ export const App: React.FC = () => {
     }
 
     return (
-        <TaskProvider>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path='/dashboard' element={<Auth0Guard component={Dashboard} />} />
-                <Route path="/callback" element={<Callback />} />
-            </Routes>
-        </TaskProvider>
+        <UserProgressProvider>
+            <TaskProvider>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path='/dashboard' element={<Auth0Guard component={Dashboard} />} />
+                    <Route path="/callback" element={<Callback />} />
+                </Routes>
+            </TaskProvider>
+        </UserProgressProvider>
     );
 }
 

@@ -7,3 +7,9 @@ export interface User {
     sub?: string;
     nickname?: string;
 }
+
+export interface UserProgress {
+    level: number;
+    currentXP: number;
+    totalXP: number;
+}
