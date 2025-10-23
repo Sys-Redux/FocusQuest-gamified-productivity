@@ -3,9 +3,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { ProfileModal } from '../pages/ProfileModal';
 import { LoginButton } from './LoginButton';
 import { LogoutButton } from './LogoutButton';
+import { useNavigate } from 'react-router-dom';
 
 export const NavBar: React.FC = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const navigate = useNavigate();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -44,6 +46,15 @@ export const NavBar: React.FC = () => {
                                 <div className='text-ctp-subtext0 text-sm'>Loading...</div>
                             ) : isAuthenticated ? (
                                 <>
+                                    {/* Home Button */}
+                                    <button
+                                        onClick={() => navigate('/')}
+                                        className='text-ctp-text hover:text-ctp-mauve transition-colors
+                                            font-medium text-sm sm:text-base'
+                                        aria-label='Go to Home'
+                                    >
+                                        Home
+                                    </button>
                                     {/* Profile Button */}
                                     <button
                                         onClick={() => setIsProfileOpen(true)}
