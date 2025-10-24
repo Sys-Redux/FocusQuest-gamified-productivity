@@ -26,12 +26,14 @@ The entire app is themed with the gorgeous **Catppuccin Mocha** color palette, f
 ## ✨ Key Features
 
 ### 🔐 Authentication
+
 - **Auth0 Universal Login** - Secure email/password and social authentication (Google)
 - **Protected Routes** - Dashboard accessible only to authenticated users
 - **Profile Modal** - View user details, avatar, and verification status
 - **Persistent Sessions** - Refresh tokens keep you logged in
 
 ### 🎯 Task Management
+
 - **Create Quests** - Add tasks with title, description, priority, difficulty, and optional due dates
 - **Priority Levels** - Low, Medium, High with color-coded badges
 - **Difficulty Tiers** - Easy (10 XP), Medium (25 XP), Hard (50 XP)
@@ -41,6 +43,7 @@ The entire app is themed with the gorgeous **Catppuccin Mocha** color palette, f
 - **Real-time Stats** - Dashboard shows total, completed, and pending quests
 
 ### 🎮 Gamification System
+
 - **XP Rewards** - Earn XP based on task difficulty and priority when completing quests
 - **Level Progression** - Exponential leveling system (100 * level^1.5 XP per level)
 - **XP Bar Component** - Visual progress bar showing current level, XP, and progress to next level
@@ -48,6 +51,7 @@ The entire app is themed with the gorgeous **Catppuccin Mocha** color palette, f
 - **localStorage Persistence** - Your level and XP are saved across sessions
 
 ### 🎨 UI/UX Design
+
 - **Catppuccin Mocha Palette** - Premium dark theme with perfect color harmony
 - **Glassmorphism** - Frosted glass effects on cards, modals, and navbar
 - **Scroll-aware NavBar** - Glass opacity increases on scroll for better readability
@@ -60,7 +64,7 @@ The entire app is themed with the gorgeous **Catppuccin Mocha** color palette, f
 
 ## 📁 Project Structure
 
-```
+```md
 src/
 ├── assets/              # Images and static files
 │   ├── dino.png           # Feature showcase image
@@ -104,6 +108,7 @@ src/
 ## 🎮 Gamification Mechanics
 
 ### XP Calculation
+
 ```typescript
 Base XP (Difficulty):
 - Easy: 10 XP
@@ -119,11 +124,13 @@ Final XP = Base XP × Priority Multiplier
 ```
 
 **Examples:**
+
 - Easy + Low = 10 XP
 - Medium + Medium = 30 XP (25 × 1.2)
 - Hard + High = 75 XP (50 × 1.5)
 
 ### Leveling System
+
 ```typescript
 XP Required for Level N = 100 × N^1.5
 
@@ -139,6 +146,7 @@ Level 10 → Level 11: 3,162 XP
 ## 🛠️ Setup & Installation
 
 ### Prerequisites
+
 - **Node.js** (v18+ recommended)
 - **Auth0 Account** (free tier works)
 
@@ -173,6 +181,7 @@ npm run preview
 4. (Optional) Enable Google Social Connection
 5. Request scopes: `openid profile email`
 6. Update `src/context/Auth0ProviderWithNavigate.tsx` with your Auth0 credentials:
+
    ```tsx
    const domain = 'YOUR_AUTH0_DOMAIN';
    const clientId = 'YOUR_AUTH0_CLIENT_ID';
@@ -183,7 +192,9 @@ npm run preview
 ## 🎨 Design Philosophy
 
 ### Catppuccin Mocha Palette
+
 Every color in FocusQuest comes from the carefully curated Catppuccin Mocha theme:
+
 - **Primary**: Mauve (#cba6f7) - Main brand color
 - **Accent**: Pink (#f5c2e7), Blue (#89b4fa), Lavender (#b4befe)
 - **Semantic**: Green (success), Yellow (warning), Red (danger)
@@ -192,6 +203,7 @@ Every color in FocusQuest comes from the carefully curated Catppuccin Mocha them
 - **Text**: High contrast text (#cdd6f4, #a6adc8, #bac2de)
 
 ### Glassmorphism
+
 ```css
 .glass → Semi-transparent with backdrop-blur-xl
 .glass-strong → More opaque with backdrop-blur-2xl
@@ -199,6 +211,7 @@ Every color in FocusQuest comes from the carefully curated Catppuccin Mocha them
 ```
 
 ### Animated Gradients
+
 ```css
 .gradient-bg → Subtle 300s rotating gradient
 .gradient-bg-vibrant → Multi-color vibrant gradient for hero sections
@@ -216,6 +229,7 @@ Every color in FocusQuest comes from the carefully curated Catppuccin Mocha them
 ```
 
 ### Provider Hierarchy
+
 ```tsx
 BrowserRouter
   └── Auth0Provider
@@ -229,19 +243,24 @@ BrowserRouter
 ## 💾 State Management
 
 ### TaskProvider
+
 Manages all task CRUD operations and awards XP on completion:
+
 - `addTask(task: Task)` - Add new task
 - `updateTask(id: string, task: Partial<Task>)` - Update existing task
 - `deleteTask(id: string)` - Remove task
 - `toggleTaskComplete(id: string)` - Toggle completion & award XP (once per task)
 
 ### UserProgressProvider
+
 Manages user level and XP progression:
+
 - `addXP(amount: number)` - Add XP and recalculate level
 - `resetProgress()` - Reset to level 1 with 0 XP
 - Persists to `localStorage` as `focusquest_user_progress`
 
 ### Data Persistence
+
 - **Tasks**: Stored in `localStorage` as `focusquest_tasks` (currently disabled, in-memory only)
 - **User Progress**: Stored in `localStorage` as `focusquest_user_progress`
 - **Auth Session**: Managed by Auth0 with refresh tokens in `localStorage`
@@ -251,21 +270,27 @@ Manages user level and XP progression:
 ## 🎯 Key Components
 
 ### XPBar
+
 Displays current level, XP progress, and total XP:
+
 - Circular level badge with gradient background
 - Animated progress bar with shimmer effect
 - XP needed for next level indicator
 - Responsive design for mobile and desktop
 
 ### TaskModal
+
 Comprehensive task management modal:
+
 - **View Mode**: Display all task details, completion toggle
 - **Edit Mode**: Inline form for editing title, description, priority, difficulty, due date
 - **Delete Confirmation**: Overlay dialog to prevent accidental deletions
 - Uses single `formData` object with `handleChange` for clean state management
 
 ### NavBar
+
 Fixed, scroll-aware navigation:
+
 - Glass effect intensifies on scroll
 - Logo with gradient text effect
 - Home button (only when authenticated)
