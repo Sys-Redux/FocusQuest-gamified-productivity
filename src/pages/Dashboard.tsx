@@ -144,9 +144,9 @@ export const Dashboard: React.FC = () => {
                                                     }`}>
                                                         {task.priority.toUpperCase()}
                                                     </span>
-                                                    {task.dueDate && (
+                                                    {task.due_date && (
                                                         <span className='text-xs text-ctp-subtext0'>
-                                                            Due: {new Date(task.dueDate).toLocaleDateString()}
+                                                            Due: {new Date(task.due_date).toLocaleDateString()}
                                                         </span>
                                                     )}
                                                 </div>

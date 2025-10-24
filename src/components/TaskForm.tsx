@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { useTasks } from '../hooks/useTasks';
-import { type Task } from '../types/task';
 
 interface TaskFormProps {
     isOpen: boolean;
@@ -18,18 +17,13 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const newTask: Task = {
-            // Generate a unique & secure ID (only works in secure contexts)
-            id: crypto.randomUUID(),
+        // Only send the fields that the user provides - database handles the rest
+        const newTask = {
             title,
             description,
-            completed: false,
             priority,
             difficulty,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            // If dueDate is not an empty string, convert it to a Date object and include it in the newTask
-            ...(dueDate && { dueDate: new Date(dueDate) }),
+            due_date: dueDate || undefined, // Send as ISO string or undefined
         };
 
         addTask(newTask);

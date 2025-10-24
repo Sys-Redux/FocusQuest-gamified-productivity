@@ -32,7 +32,7 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
                 description: task.description,
                 priority: task.priority,
                 difficulty: task.difficulty,
-                dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : ''
+                dueDate: task.due_date ? new Date(task.due_date).toISOString().split('T')[0] : ''
             });
         }
     }, [task]);
@@ -56,8 +56,7 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
             description: formData.description,
             priority: formData.priority,
             difficulty: formData.difficulty,
-            dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
-            updatedAt: new Date(),
+            due_date: formData.dueDate || null,
         });
 
         setIsEditing(false);
@@ -240,7 +239,7 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
                             <input
                                 type='checkbox'
                                 checked={task.completed}
-                                onChange={() => updateTask(task.id, { completed: !task.completed, updatedAt: new Date() })}
+                                onChange={() => updateTask(task.id, { completed: !task.completed })}
                                 className='h-5 w-5 rounded border-ctp-surface2 bg-ctp-surface0 text-ctp-mauve cursor-pointer'
                             />
                             <span className='text-sm font-medium text-ctp-text'>
@@ -279,11 +278,11 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
                         </div>
 
                         {/* Due Date */}
-                        {task.dueDate && (
+                        {task.due_date && (
                             <div>
                                 <h3 className='text-sm font-medium text-ctp-subtext0 mb-2'>Due Date</h3>
                                 <p className='text-sm sm:text-base text-ctp-text'>
-                                    {new Date(task.dueDate).toLocaleDateString('en-US', {
+                                    {new Date(task.due_date).toLocaleDateString('en-US', {
                                         weekday: 'long',
                                         year: 'numeric',
                                         month: 'long',
@@ -298,13 +297,13 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
                             <div>
                                 <h3 className='text-xs font-medium text-ctp-overlay0 mb-1'>Created</h3>
                                 <p className='text-sm text-ctp-subtext0'>
-                                    {new Date(task.createdAt).toLocaleString()}
+                                    {new Date(task.created_at).toLocaleString()}
                                 </p>
                             </div>
                             <div>
                                 <h3 className='text-xs font-medium text-ctp-overlay0 mb-1'>Last Updated</h3>
                                 <p className='text-sm text-ctp-subtext0'>
-                                    {new Date(task.updatedAt).toLocaleString()}
+                                    {new Date(task.updated_at).toLocaleString()}
                                 </p>
                             </div>
                         </div>

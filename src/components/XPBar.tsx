@@ -12,7 +12,7 @@ export function XPBar() {
             {/* Level Display */}
             <div className='flex items-center justify-between mb-3'>
                 <div className='flex items-center gap-3'>
-                    <div className='w-12 h-12 rounded-full bg-gradient-to-br from-ctp-mauve to-ctp-pink
+                    <div className='w-12 h-12 rounded-full bg-linear-to-br from-ctp-mauve to-ctp-pink
                         flex items-center justify-center shadow-lg'>
                         <span className='text-ctp-base font-bold text-lg'>{level}</span>
                     </div>
@@ -32,13 +32,13 @@ export function XPBar() {
             {/* XP Progress Bar */}
             <div className='relative w-full h-3 bg-ctp-surface0 rounded-full overflow-hidden'>
                 <div
-                    className='absolute top-0 left-0 h-full bg-gradient-to-r from-ctp-blue via-ctp-mauve to-ctp-pink
+                    className='absolute top-0 left-0 h-full bg-linear-to-r from-ctp-blue via-ctp-mauve to-ctp-pink
                         transition-all duration-500 ease-out'
                     style={{ width: `${progress}%` }}
                 />
                 {/* Glow effect */}
                 <div
-                    className='absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent
+                    className='absolute top-0 left-0 h-full bg-linear-to-r from-transparent via-white/20 to-transparent
                         animate-shimmer'
                     style={{ width: `${progress}%` }}
                 />

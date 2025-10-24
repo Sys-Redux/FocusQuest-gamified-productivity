@@ -11,7 +11,7 @@ export const Auth0ProviderWithNavigate = ({ children }: Auth0ProviderWithNavigat
 
     const domain = 'dev-a83ln7nhed8h3wgt.us.auth0.com';
     const clientId = 'CdmKYnm2HRmWjn1UMhDXGvGBgGplNXa7';
-    const redirectUri = 'http://localhost:5173/callback';
+    const redirectUri = 'https://rcnbuild.com/callback';
 
     const onRedirectCallback = (appState?: AppState) => {
         navigate(appState?.returnTo || window.location.pathname);

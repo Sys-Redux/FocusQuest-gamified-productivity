@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file -->
 # FocusQuest
 
 A gamified task management app built with React + TypeScript. Transform your to-dos into epic quests, earn XP, level up, and conquer productivity with a stunning dark UI.
