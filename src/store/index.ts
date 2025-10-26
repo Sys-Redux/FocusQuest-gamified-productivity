@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import taskReducer from '../features/tasks/taskSlice';
-import userProgressReducer from '../features/userProgressReducer';
+import taskReducer from './slices/tasks/taskSlice';
+import userProgressReducer from './slices/userProgressReducer';
 
 // The store combines all your reducers (state slices)
 export const store = configureStore({
