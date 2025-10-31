@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { toggleTaskCompleteWithXP } from '../store/slices/tasks/tasksSlice';
+import { selectAllTasks, selectTaskStats } from '../store/slices/tasks/tasksSelectors';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useTasks } from '../hooks/useTasks';
 import { TaskForm } from '../components/TaskForm';
 import { NavBar } from '../components/NavBar';
 import { TaskModal } from './TaskModal';
@@ -9,12 +11,14 @@ import { XPBar } from '../components/XPBar';
 
 export const Dashboard: React.FC = () => {
     const { user, isLoading } = useAuth0();
-    const { tasks, toggleTaskComplete } = useTasks();
+
+    // Use Redux instead of Context
+    const tasks = useAppSelector(selectAllTasks);
+    const { completed: completedTasks, pending: pendingTasks } = useAppSelector(selectTaskStats);
+    const dispatch = useAppDispatch();
+
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-
-    const completedTasks = tasks.filter(t => t.completed).length
-    const pendingTasks = tasks.length - completedTasks;
 
     const getPriorityColor = (priority: string) => {
         switch (priority) {
@@ -123,7 +127,7 @@ export const Dashboard: React.FC = () => {
                                             <input
                                                 type='checkbox'
                                                 checked={task.completed}
-                                                onChange={() => toggleTaskComplete(task.id)}
+                                                onChange={() => dispatch(toggleTaskCompleteWithXP(task.id))}
                                                 onClick={(e) => e.stopPropagation()}
                                                 className='mt-1 h-4 w-4 sm:h-5 sm:w-5 rounded border-ctp-surface2 bg-ctp-surface0 text-ctp-mauve cursor-pointer'
                                             />

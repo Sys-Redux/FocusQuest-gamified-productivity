@@ -2,6 +2,9 @@
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Task } from '../../../types/task';
+import type { AppDispatch, RootState } from '../../store';
+import { addXP } from '../userProgress/userProgressSlice';
+import { calculateTaskXP } from '../../../utils/gamification';
 
 // Define the shape of this slice's state
 interface TasksState {
@@ -60,6 +63,30 @@ const tasksSlice = createSlice({
     },
   },
 });
+
+// Thunk action to handle task completion with XP reward
+// This is an async action that dispatches multiple synchronous actions
+export const toggleTaskCompleteWithXP = (taskId: string) => {
+  return (dispatch: AppDispatch, getState: () => RootState) => {
+    const state = getState();
+    const task = state.tasks.tasks.find(t => t.id === taskId);
+
+    if (!task) return;
+
+    // Toggle the task completion
+    dispatch(toggleTaskComplete(taskId));
+
+    // Award XP only when completing (not un-completing) and XP hasn't been awarded yet
+    if (!task.completed && !task.xpAwarded) {
+      const xpReward = calculateTaskXP(task.difficulty, task.priority);
+      dispatch(addXP(xpReward));
+      dispatch(markXPAwarded(taskId));
+
+      // Optional: Show notification (you can remove this if you don't want alerts)
+      alert(`🎉 Quest Complete! +${xpReward} XP`);
+    }
+  };
+};
 
 // Export actions - these are action creators
 // Usage: dispatch(addTask(newTask))

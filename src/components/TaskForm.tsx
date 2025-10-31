@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
-import { useTasks } from '../hooks/useTasks';
+import { useAppDispatch } from '../store/hooks';
+import { addTask } from '../store/slices/tasks/tasksSlice';
 import { type Task } from '../types/task';
 
 interface TaskFormProps {
@@ -8,7 +9,7 @@ interface TaskFormProps {
 }
 
 export function TaskForm({ isOpen, onClose }: TaskFormProps) {
-    const { addTask } = useTasks();
+    const dispatch = useAppDispatch();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
@@ -32,7 +33,8 @@ export function TaskForm({ isOpen, onClose }: TaskFormProps) {
             ...(dueDate && { dueDate: new Date(dueDate) }),
         };
 
-        addTask(newTask);
+        // Dispatch Redux action
+        dispatch(addTask(newTask));
 
         // Reset form
         setTitle('');

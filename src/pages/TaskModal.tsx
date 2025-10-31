@@ -1,5 +1,6 @@
 import { useState, useEffect, type FormEvent } from 'react';
-import { useTasks } from '../hooks/useTasks';
+import { useAppDispatch } from '../store/hooks';
+import { updateTask, deleteTask } from '../store/slices/tasks/tasksSlice';
 import { type Task } from '../types/task';
 
 interface TaskModalProps {
@@ -9,7 +10,7 @@ interface TaskModalProps {
 }
 
 export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
-    const { updateTask, deleteTask } = useTasks();
+    const dispatch = useAppDispatch();
 
     // Edit mode state
     const [isEditing, setIsEditing] = useState(false);
@@ -51,20 +52,22 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
     const handleSaveEdit = (e: FormEvent) => {
         e.preventDefault();
 
-        updateTask(task.id, {
-            title: formData.title,
-            description: formData.description,
-            priority: formData.priority,
-            difficulty: formData.difficulty,
-            dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
-            updatedAt: new Date(),
-        });
+        dispatch(updateTask({
+            id: task.id,
+            updates: {
+                title: formData.title,
+                description: formData.description,
+                priority: formData.priority,
+                difficulty: formData.difficulty,
+                dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
+            }
+        }));
 
         setIsEditing(false);
     };
 
     const handleDelete = () => {
-        deleteTask(task.id);
+        dispatch(deleteTask(task.id));
         onClose();
     };
 
@@ -240,7 +243,7 @@ export const TaskModal = ({ task, isOpen, onClose }: TaskModalProps) => {
                             <input
                                 type='checkbox'
                                 checked={task.completed}
-                                onChange={() => updateTask(task.id, { completed: !task.completed, updatedAt: new Date() })}
+                                onChange={() => dispatch(updateTask({ id: task.id, updates: { completed: !task.completed } }))}
                                 className='h-5 w-5 rounded border-ctp-surface2 bg-ctp-surface0 text-ctp-mauve cursor-pointer'
                             />
                             <span className='text-sm font-medium text-ctp-text'>

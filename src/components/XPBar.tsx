@@ -1,11 +1,12 @@
 // src/components/XPBar.tsx
 
-import { useUserProgress } from '../hooks/useUserProgress';
-import { getLevelProgress } from '../utils/gamification';
+import { useAppSelector } from '../store/hooks';
+import { selectLevelProgress, selectTotalXP } from '../store/slices/userProgress/userProgressSelectors';
 
 export function XPBar() {
-    const { userProgress } = useUserProgress();
-    const { level, currentXP, xpForNextLevel, progress } = getLevelProgress(userProgress.totalXP);
+    const levelProgress = useAppSelector(selectLevelProgress);
+    const totalXP = useAppSelector(selectTotalXP);
+    const { level, currentXP, xpForNextLevel, progress } = levelProgress;
 
     return (
         <div className='glass-strong rounded-xl p-4 sm:p-6 shadow-lg'>
@@ -25,7 +26,7 @@ export function XPBar() {
                 </div>
                 <div className='text-right'>
                     <p className='text-xs text-ctp-overlay0'>Total XP</p>
-                    <p className='text-sm font-bold text-ctp-mauve'>{userProgress.totalXP}</p>
+                    <p className='text-sm font-bold text-ctp-mauve'>{totalXP}</p>
                 </div>
             </div>
 
