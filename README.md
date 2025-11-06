@@ -302,6 +302,7 @@ Fixed, scroll-aware navigation:
 ## 🚧 Future Enhancements
 
 - [ ] **Backend Integration** - Supabase or Firebase for cloud sync
+- [ ] **Replace Auth0** - Use Firebase for authentication
 - [ ] **User-specific Tasks** - Filter tasks by Auth0 user ID
 - [ ] **Task Categories/Tags** - Organize quests by project or context
 - [ ] **Due Date Reminders** - Browser notifications for upcoming deadlines
